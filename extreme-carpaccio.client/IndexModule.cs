@@ -21,6 +21,7 @@ namespace xCarpaccio.client
                 }
 
                 var order = this.Bind<Order>();
+
                 Bill bill = null;
                 //TODO: do something with order and return a bill if possible
                 // If you manage to get the result, return a Bill object (JSON serialization is done automagically)
@@ -37,5 +38,23 @@ namespace xCarpaccio.client
                 return Negotiate.WithStatusCode(HttpStatusCode.OK);
             };
         }
+
+        public double CalculSansTaxe(Order commande)
+        {
+            double total = 0;
+            
+            decimal[] prix = commande.Prices;
+            int[] qte = commande.Quantities;
+            int longueur = prix.Length;
+            int i;
+            for (i = 0; i < longueur; i++)
+            {
+                total += (double) (prix[i] * qte[i]);
+            }
+
+            return total;
+
+        }
     }
+
 }
